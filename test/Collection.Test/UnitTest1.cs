@@ -49,11 +49,12 @@ namespace Collection.Test
         string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
         string filePath = projectPath + @"\test\Collection.Test\var\population.csv";
         CountryManager countryManager = new CountryManager(new CsvReader(filePath, true, ','));
-        countryManager.GetNFirstCountries(10);
-        // countryManager.GetNFirstCountries(10);
-        //When
 
+        //When
+        countryManager.GetNFirstCountries(10);
         //Then
+        Assert.Equal("lille", countryManager.Countries[0].Name);
+        Assert.Equal(42, countryManager.Countries[3].Code);
     }
 
     [Fact]
