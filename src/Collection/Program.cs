@@ -16,7 +16,7 @@ namespace Collection
 
             foreach (var city in cityManager.Location)
             {
-                Console.WriteLine($"Population of {city.Name} \t: {city.Population.ToString("N")}");
+                Console.WriteLine($"Population of {city.Name.PadRight(10)} : {city.Population.ToString("N").PadLeft(15)}");
             }
         }
     }
