@@ -45,13 +45,12 @@ namespace Collection.Test
         //Given
         string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
         string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
-        LocationManager cityManager = new LocationManager(new CsvReader(filePath, true, ','));
-
+        ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
         //When
         cityManager.GetNFirstLocation(10);
         //Then
-        Assert.Equal("lille", cityManager.Locations[0].Name);
-        Assert.Equal(42, cityManager.Locations[3].Code);
+        Assert.Equal("lille", cityManager.Location[0].Name);
+        Assert.Equal(42, cityManager.Location[3].Code);
     }
 
     [Fact]

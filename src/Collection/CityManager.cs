@@ -1,27 +1,38 @@
+using System;
+using System.Collections.Generic;
+
 namespace Collection
 {
-    public class LocationManager
+    public interface ILocationManager
     {
-        IFileReader _fileReader;
+        IFileReader FileReader { get; }
+        ILocation[] Location { get; }
 
-        private City[] _locations;
+        void GetNFirstLocation(int lines);
+    }
 
-        public City[] Locations { get => _locations;}
+    public class CityManager : ILocationManager
+    {
+        private IFileReader _fileReader;
+        public IFileReader FileReader { get => _fileReader; }
+        private ILocation[] _location;
+        public ILocation[] Location { get => _location; }
 
-        public LocationManager(IFileReader fileReader)
+        public CityManager(IFileReader fileReader)
         {
             _fileReader = fileReader;
         }
 
         public void GetNFirstLocation(int lines)
         {
-            _locations = new City[lines];
+            _location = new City[lines];
+
             int index = 0;
-            foreach (string line in _fileReader.ReadNFirstLines(lines))
+            foreach (string line in FileReader.ReadNFirstLines(lines))
             {
-               string[] spl = line.Split(_fileReader.GetDelimiter());
-               _locations[index] = new City(spl[0], int.Parse(spl[1]), spl[2], int.Parse(spl[3]));
-               index++;
+                string[] spl = line.Split(FileReader.GetDelimiter());
+                _location[index] = new City(spl[0], int.Parse(spl[1]), spl[2], int.Parse(spl[3]));
+                index++;
             }
         }
     }
