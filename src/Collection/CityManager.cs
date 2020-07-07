@@ -25,12 +25,12 @@ namespace Collection
             _fileReader = fileReader;
         }
 
-        public void GetNFirstLocation(int lines)
+        public void GetNFirstLocation(int totLines)
         {
-            _location = new City[lines];
+            _location = new City[totLines];
 
             int index = 0;
-            foreach (string line in FileReader.ReadNFirstLines(lines))
+            foreach (string line in FileReader.ReadNFirstLines(totLines))
             {
                 _location[index] = GetLocationFromLine(line);
                 index++;
