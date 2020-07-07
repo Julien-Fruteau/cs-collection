@@ -11,7 +11,7 @@ namespace Collection
             string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
             string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
             ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
-            //When
+
             cityManager.GetNFirstLocation(10);
 
             foreach (var city in cityManager.Location)

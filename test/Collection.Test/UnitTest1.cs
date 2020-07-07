@@ -31,12 +31,18 @@ namespace Collection.Test
             string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
             string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
             IFileReader fileReader = new CsvReader(filePath, true, ',');
-            City[] countries = new City[10];
+            List<string> line = new List<string>();
+            int totLines = 10;
             //When
-            foreach (var item in fileReader.ReadNFirstLines(10))
+            foreach (string curLine in fileReader.ReadNFirstLines(totLines))
             {
-                Console.WriteLine($"{item} deleted");
+                line.Add(curLine);
             }
+            //Then
+            Assert.Equal(10, line.Count);
+            Assert.NotEqual("name,code,region,population", line[0]);
+            Assert.Equal("lille,59,nord,1000000", line[0]);
+            Assert.Equal("bordeaux,33,gironde,249000", line[totLines - 1]);
         }
 
         [Fact]
