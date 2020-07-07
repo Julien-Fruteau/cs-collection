@@ -27,34 +27,31 @@ namespace Collection.Test
     [Fact]
     public void TestCsvReaderReadNFirstLines()
     {
-            //Given
+        //Given
         string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-        string filePath = projectPath + @"\test\Collection.Test\var\population.csv";
+        string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
         IFileReader fileReader = new CsvReader(filePath, true, ',');
-        Country[] countries = new Country[10];
+        City[] countries = new City[10];
         //When
-        // IEnumerable<string> fileLines = fileReader.ReadNFirstLines(10);
         foreach (var item in fileReader.ReadNFirstLines(10))
         {
             Console.WriteLine($"{item} deleted");
-
         }
-        //Then
     }
 
     [Fact]
-    public void TestCountryManager()
+    public void TestLocationManager()
     {
         //Given
         string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-        string filePath = projectPath + @"\test\Collection.Test\var\population.csv";
-        CountryManager countryManager = new CountryManager(new CsvReader(filePath, true, ','));
+        string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
+        LocationManager cityManager = new LocationManager(new CsvReader(filePath, true, ','));
 
         //When
-        countryManager.GetNFirstCountries(10);
+        cityManager.GetNFirstLocation(10);
         //Then
-        Assert.Equal("lille", countryManager.Countries[0].Name);
-        Assert.Equal(42, countryManager.Countries[3].Code);
+        Assert.Equal("lille", cityManager.Locations[0].Name);
+        Assert.Equal(42, cityManager.Locations[3].Code);
     }
 
     [Fact]
