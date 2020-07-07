@@ -37,7 +37,7 @@ namespace Collection.Test
         foreach (var item in fileReader.ReadNFirstLines(10))
         {
             Console.WriteLine($"{item} deleted");
-            
+
         }
         //Then
     }

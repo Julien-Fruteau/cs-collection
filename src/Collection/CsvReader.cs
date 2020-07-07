@@ -18,7 +18,7 @@ namespace Collection
             _delimiter = delimiter;
         }
 
-        public IEnumerable<string> ReadNFirstLines(int lines)
+        public IEnumerable<string> ReadNFirstLines(int totLines)
         {
             int curLine = 0;
             string line;
@@ -26,18 +26,13 @@ namespace Collection
 
             using (StreamReader sr = File.OpenText(_filePath))
             {
-                while (curLine < lines + offset && (line = sr.ReadLine()) != null)
+                while (curLine < totLines + offset && (line = sr.ReadLine()) != null)
                 {
                     if (curLine >= offset) yield return line;
                     curLine++;
                 }
             }
         }
-
-        // public int GetHeaderOffset()
-        // {
-        //     return _header? 1: 0;
-        // }
 
         public char GetDelimiter()
         {
