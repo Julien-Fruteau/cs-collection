@@ -25,6 +25,17 @@ namespace Collection.Test
         }
 
         [Fact]
+        public void InstantiateListv1()
+        {
+        //Given
+            List<string> weekDays = new List<string> {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        //When
+
+        //Then
+            Assert.Equal("Monday", weekDays[0]);
+        }
+
+        [Fact]
         public void TestCsvReaderReadNFirstLines()
         {
             //Given
