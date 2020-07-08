@@ -6,7 +6,8 @@ namespace Collection
     public interface ILocationManager
     {
         IFileReader FileReader { get; }
-        ILocation[] Location { get; }
+        // ILocation[] Location { get; }
+        List<ILocation> Location { get; }
 
         void GetNFirstLocation(int lines);
 
@@ -17,8 +18,8 @@ namespace Collection
     {
         private IFileReader _fileReader;
         public IFileReader FileReader { get => _fileReader; }
-        private ILocation[] _location;
-        public ILocation[] Location { get => _location; }
+        private List<ILocation> _location;
+        public List<ILocation> Location { get => _location; }
 
         public CityManager(IFileReader fileReader)
         {
@@ -27,12 +28,13 @@ namespace Collection
 
         public void GetNFirstLocation(int totLines)
         {
-            _location = new City[totLines];
+            _location = new List<ILocation>();
 
             int index = 0;
             foreach (string line in FileReader.ReadNFirstLines(totLines))
             {
-                _location[index] = GetLocationFromLine(line);
+                _location.Add(GetLocationFromLine(line));
+                // _location[index] = GetLocationFromLine(line);
                 index++;
             }
         }
