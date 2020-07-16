@@ -8,8 +8,7 @@ namespace Collection
         {
             Console.WriteLine("Hello World");
 
-            string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-            string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
+            string filePath = TestFile.GetTestFilePath();
             ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
 
             cityManager.GetNFirstLocation(10);

@@ -39,8 +39,7 @@ namespace Collection.Test
         public void TestCsvReaderReadNFirstLines()
         {
             //Given
-            string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-            string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
+            string filePath = TestFile.GetTestFilePath();
             IFileReader fileReader = new CsvReader(filePath, true, ',');
             List<string> line = new List<string>();
             int totLines = 10;
@@ -60,8 +59,7 @@ namespace Collection.Test
         public void TestLocationManager()
         {
             //Given
-            string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-            string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
+            string filePath = TestFile.GetTestFilePath();
             ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
             //When
             cityManager.GetNFirstLocation(10);
@@ -74,7 +72,7 @@ namespace Collection.Test
         public void ReadFile()
         {
             //Given
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\20012454\Documents\RFI\workspace\tmp\oms-stock-even-preprod_metrics.txt");
+            string[] lines = System.IO.File.ReadAllLines(TestFile.GetTestFilePath());
             //When
             //Then
             Assert.NotNull(lines);
