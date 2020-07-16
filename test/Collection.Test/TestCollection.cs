@@ -24,21 +24,23 @@ namespace Collection.Test
             Assert.Equal("Friday", weekDays[4]);
         }
 
-        public string GetRootPath()
+        public string GetTestFilePath()
         {
+            string rootPath;
             if (OperatingSystem.isMacOS())
             {
-                return @"/Users/julien/MEGA/Documents/Dev/cs/cs-collection";
+                rootPath = @"/Users/julien/MEGA/Documents/Dev/cs/cs-collection";
             }
             else {
-                return @"C:\Users\20012454\myRepo\cs\collection";
+                rootPath = @"C:\Users\20012454\myRepo\cs\collection";
             }
+            return rootPath + @"/test/Collection.Test/var/cities.csv";
         }
 
         [Fact]
         public void TestCsvReaderReadNFirstLines()
         {
-            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
+            string filePath = GetTestFilePath();
             IFileReader fileReader = new CsvReader(filePath, true, ',');
             City[] countries = new City[10];
             //When
@@ -54,7 +56,7 @@ namespace Collection.Test
         public void TestCityManager()
         {
             //Given
-            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
+            string filePath = GetTestFilePath();
             CityManager CityManager = new CityManager(new CsvReader(filePath, true, ','));
 
             //When
@@ -68,7 +70,7 @@ namespace Collection.Test
         public void ReadFile()
         {
             //Given
-            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
+            string filePath = GetTestFilePath();
             string[] lines = System.IO.File.ReadAllLines(filePath);
             //When
             //Then
