@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Collection.Test
 {
-    public class UnitTest1
+    public class TestCollection
     {
         [Fact]
         public void InstantiateArrayv1()
@@ -24,57 +24,52 @@ namespace Collection.Test
             Assert.Equal("Friday", weekDays[4]);
         }
 
-        [Fact]
-        public void InstantiateListv1()
+        public string GetRootPath()
         {
-        //Given
-            List<string> weekDays = new List<string> {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        //When
-
-        //Then
-            Assert.Equal("Monday", weekDays[0]);
+            if (OperatingSystem.isMacOS())
+            {
+                return @"/Users/julien/MEGA/Documents/Dev/cs/cs-collection";
+            }
+            else {
+                return @"C:\Users\20012454\myRepo\cs\collection";
+            }
         }
 
         [Fact]
         public void TestCsvReaderReadNFirstLines()
         {
-            //Given
-            string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-            string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
+            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
             IFileReader fileReader = new CsvReader(filePath, true, ',');
-            List<string> line = new List<string>();
-            int totLines = 10;
+            Country[] countries = new Country[10];
             //When
-            foreach (string curLine in fileReader.ReadNFirstLines(totLines))
+            // IEnumerable<string> fileLines = fileReader.ReadNFirstLines(10);
+            foreach (var item in fileReader.ReadNFirstLines(10))
             {
-                line.Add(curLine);
+                Console.WriteLine($"{item} deleted");
+                
             }
-            //Then
-            Assert.Equal(10, line.Count);
-            Assert.NotEqual("name,code,region,population", line[0]);
-            Assert.Equal("lille,59,nord,1000000", line[0]);
-            Assert.Equal("bordeaux,33,gironde,249000", line[totLines - 1]);
         }
 
         [Fact]
-        public void TestLocationManager()
+        public void TestCountryManager()
         {
             //Given
-            string projectPath = @"C:\Users\20012454\myRepo\cs\collection";
-            string filePath = projectPath + @"\test\Collection.Test\var\cities.csv";
-            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
+            CountryManager countryManager = new CountryManager(new CsvReader(filePath, true, ','));
+
             //When
-            cityManager.GetNFirstLocation(10);
+            countryManager.GetNFirstCountries(10);
             //Then
-            Assert.Equal("lille", cityManager.Location[0].Name);
-            Assert.Equal(42, cityManager.Location[3].Code);
+            Assert.Equal("lille", countryManager.Countries[0].Name);
+            Assert.Equal(42, countryManager.Countries[3].Code);
         }
 
         [Fact]
         public void ReadFile()
         {
             //Given
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\20012454\Documents\RFI\workspace\tmp\oms-stock-even-preprod_metrics.txt");
+            string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
+            string[] lines = System.IO.File.ReadAllLines(filePath);
             //When
             //Then
             Assert.NotNull(lines);
