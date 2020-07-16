@@ -40,7 +40,7 @@ namespace Collection.Test
         {
             string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
             IFileReader fileReader = new CsvReader(filePath, true, ',');
-            Country[] countries = new Country[10];
+            City[] countries = new City[10];
             //When
             // IEnumerable<string> fileLines = fileReader.ReadNFirstLines(10);
             foreach (var item in fileReader.ReadNFirstLines(10))
@@ -51,17 +51,17 @@ namespace Collection.Test
         }
 
         [Fact]
-        public void TestCountryManager()
+        public void TestCityManager()
         {
             //Given
             string filePath = GetRootPath() + @"/test/Collection.Test/var/population.csv";
-            CountryManager countryManager = new CountryManager(new CsvReader(filePath, true, ','));
+            CityManager CityManager = new CityManager(new CsvReader(filePath, true, ','));
 
             //When
-            countryManager.GetNFirstCountries(10);
+            CityManager.GetNFirstLocation(10);
             //Then
-            Assert.Equal("lille", countryManager.Countries[0].Name);
-            Assert.Equal(42, countryManager.Countries[3].Code);
+            Assert.Equal("lille", CityManager.Location[0].Name);
+            Assert.Equal(42, CityManager.Location[3].Code);
         }
 
         [Fact]
