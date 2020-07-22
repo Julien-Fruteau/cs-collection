@@ -6,11 +6,8 @@ namespace Collection
     public interface ILocationManager
     {
         IFileReader FileReader { get; }
-        // ILocation[] Location { get; }
         List<ILocation> Location { get; }
-
         void GetNFirstLocation(int lines);
-
         ILocation GetLocationFromLine(string line);
     }
 
@@ -34,7 +31,6 @@ namespace Collection
             foreach (string line in FileReader.ReadNFirstLines(totLines))
             {
                 _location.Add(GetLocationFromLine(line));
-                // _location[index] = GetLocationFromLine(line);
                 index++;
             }
         }

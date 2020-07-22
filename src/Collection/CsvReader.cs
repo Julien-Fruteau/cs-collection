@@ -18,7 +18,6 @@ namespace Collection
             _header = header;
             _delimiter = delimiter;
             _totLines = GetFileTotLines();
-
         }
 
         public int GetFileTotLines()
@@ -49,11 +48,6 @@ namespace Collection
             {
                 yield return line;
             }
-            // string[] lines = File.ReadAllLines(_filePath);
-            // foreach (string line in lines)
-            // {
-            //     yield return line;
-            // }
         }
 
         public char GetDelimiter()
