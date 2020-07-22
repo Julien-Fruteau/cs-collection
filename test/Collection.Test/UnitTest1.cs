@@ -106,10 +106,28 @@ namespace Collection.Test
             //Given
             string filePath = TestFile.GetTestFilePath();
             ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
             //When
-        
+            int myIndex = cityManager.Location.FindIndex(x => x.Population <= 1_500_000);
+            cityManager.Location.Insert(myIndex, new City("lilliput", 99, "Somewhere", 2_000_000));
             //Then
+            Assert.Equal("lilliput", cityManager.Location[0].Name);
+
         }
+
+        [Fact]
+        public void TestSortCities()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //When
+            cityManager.Location.Sort((x, y) => (x.Population.CompareTo(y.Population)));
+            
+        }
+
+
 
         [Fact]
         public void ReadFile()

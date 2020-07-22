@@ -16,8 +16,8 @@ namespace Collection
     {
         private IFileReader _fileReader;
         public IFileReader FileReader { get => _fileReader; }
+        public List<ILocation> Location { get => _location; set => _location = value; }
         private List<ILocation> _location;
-        public List<ILocation> Location { get => _location; }
 
         public CityManager(IFileReader fileReader)
         {
@@ -26,12 +26,12 @@ namespace Collection
 
         public void GetNFirstLocation(int totLines)
         {
-            _location = new List<ILocation>();
+            Location = new List<ILocation>();
 
             int index = 0;
             foreach (string line in FileReader.ReadNFirstLines(totLines))
             {
-                _location.Add(GetLocationFromLine(line));
+                Location.Add(GetLocationFromLine(line));
                 index++;
             }
         }
