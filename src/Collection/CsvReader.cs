@@ -10,6 +10,7 @@ namespace Collection
         private bool _header;
         private char _delimiter;
         private int _totLines;
+        public int TotLines {get => _totLines;}
 
         public CsvReader(string filePath, bool header, char delimiter)
         {
@@ -44,7 +45,7 @@ namespace Collection
 
         public IEnumerable<string> ReadAllLines()
         {
-            foreach (string line in ReadNFirstLines(_totLines))
+            foreach (string line in ReadNFirstLines(TotLines))
             {
                 yield return line;
             }

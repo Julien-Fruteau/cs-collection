@@ -8,6 +8,7 @@ namespace Collection
         IFileReader FileReader { get; }
         List<ILocation> Location { get; }
         void GetNFirstLocation(int lines);
+        void GetAllLocation();
         ILocation GetLocationFromLine(string line);
     }
 
@@ -39,6 +40,11 @@ namespace Collection
         {
             string[] spl = line.Split(FileReader.GetDelimiter());
             return new City(spl[0], int.Parse(spl[1]), spl[2], int.Parse(spl[3]));
+        }
+
+        public void GetAllLocation()
+        {
+            GetNFirstLocation(FileReader.TotLines);
         }
     }
 }

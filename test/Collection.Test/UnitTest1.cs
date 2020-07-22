@@ -88,6 +88,19 @@ namespace Collection.Test
         }
 
         [Fact]
+        public void TestCityManagerGetAllLines()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            //When
+            cityManager.GetAllLocation();
+            //Then
+            Assert.Equal("lille", cityManager.Location[0].Name);
+            Assert.Equal("clermont ferrand", cityManager.Location[10].Name);
+        }
+
+        [Fact]
         public void TestListInsert()
         {
             //Given
