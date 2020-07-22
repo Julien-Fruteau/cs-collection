@@ -83,7 +83,7 @@ namespace Collection.Test
                 lastLine = line;
             }
             //Then
-            Assert.Equal(12, count);
+            Assert.Equal(11, count);
             Assert.Equal("clermont ferrand,63,puy de dome,169000", lastLine);
         }
 
