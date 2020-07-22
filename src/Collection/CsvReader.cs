@@ -9,6 +9,8 @@ namespace Collection
         private string _filePath;
         private bool _header;
         private char _delimiter;
+        private int _totLines;
+        public int TotLines {get => _totLines;}
 
         public CsvReader(string filePath, bool header, char delimiter)
         {
@@ -16,9 +18,16 @@ namespace Collection
             _filePath = filePath;
             _header = header;
             _delimiter = delimiter;
+            _totLines = GetFileTotLines();
         }
 
-        public IEnumerable<string> ReadNFirstLines(int lines)
+        public int GetFileTotLines()
+        {
+            string[] lines = File.ReadAllLines(_filePath);
+            return lines.Length;
+        }
+
+        public IEnumerable<string> ReadNFirstLines(int totLines)
         {
             int curLine = 0;
             string line;
@@ -26,7 +35,7 @@ namespace Collection
 
             using (StreamReader sr = File.OpenText(_filePath))
             {
-                while (curLine < lines + offset && (line = sr.ReadLine()) != null)
+                while (curLine < totLines + offset && (line = sr.ReadLine()) != null)
                 {
                     if (curLine >= offset) yield return line;
                     curLine++;
@@ -34,10 +43,13 @@ namespace Collection
             }
         }
 
-        // public int GetHeaderOffset()
-        // {
-        //     return _header? 1: 0;
-        // }
+        public IEnumerable<string> ReadAllLines()
+        {
+            foreach (string line in ReadNFirstLines(TotLines))
+            {
+                yield return line;
+            }
+        }
 
         public char GetDelimiter()
         {
