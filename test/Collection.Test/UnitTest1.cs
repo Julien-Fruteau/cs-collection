@@ -155,10 +155,21 @@ namespace Collection.Test
             Assert.Equal(1, resB);
         }
 
+        [Fact]
         public void TestInstantiateDict()
         {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
             Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>();
-            
+
+            foreach (var city in cityManager.Location)
+            {
+                cities.Add(city.Name.Substring(0, 3).ToUpper(), city);
+            }
+
+            Assert.Equal("lille", cities["LIL"].Name);
+            Assert.Equal("toulouse", cities["TOU"].Name);
         }
     }
 }
