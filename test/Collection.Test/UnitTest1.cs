@@ -124,7 +124,8 @@ namespace Collection.Test
             cityManager.GetAllLocation();
             //When
             cityManager.Location.Sort((x, y) => (x.Population.CompareTo(y.Population)));
-            
+            //Then
+            Assert.Equal("noumea", cityManager.Location[0].Name);
         }
 
 
