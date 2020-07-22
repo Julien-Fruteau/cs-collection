@@ -34,6 +34,15 @@ namespace Collection
             }
         }
 
+        public IEnumerable<string> ReadAllLines()
+        {
+            string[] lines = File.ReadAllLines(_filePath);
+            foreach (string line in lines)
+            {
+                yield return line;
+            }
+        }
+
         public char GetDelimiter()
         {
             return _delimiter;

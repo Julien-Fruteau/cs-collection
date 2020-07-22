@@ -69,6 +69,36 @@ namespace Collection.Test
         }
 
         [Fact]
+        public void TestCsvReaderReadAllLines()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            IFileReader csvReader = new CsvReader(filePath, true, ',');
+            int count = 0;
+            string lastLine = "";
+            //When
+            foreach (var line in csvReader.ReadAllLines())
+            {
+                count++;
+                lastLine = line;
+            }
+            //Then
+            Assert.Equal(12, count);
+            Assert.Equal("clermont ferrand,63,puy de dome,169000", lastLine);
+        }
+
+        [Fact]
+        public void TestListInsert()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            //When
+        
+            //Then
+        }
+
+        [Fact]
         public void ReadFile()
         {
             //Given
