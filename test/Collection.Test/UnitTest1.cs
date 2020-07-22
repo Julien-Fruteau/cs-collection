@@ -154,5 +154,11 @@ namespace Collection.Test
             Assert.Equal(-1, resA);
             Assert.Equal(1, resB);
         }
+
+        public void TestInstantiateDict()
+        {
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>();
+            
+        }
     }
 }
