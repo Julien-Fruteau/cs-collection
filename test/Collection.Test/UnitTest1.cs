@@ -171,5 +171,45 @@ namespace Collection.Test
             Assert.Equal("lille", cities["LIL"].Name);
             Assert.Equal("toulouse", cities["TOU"].Name);
         }
+
+        [Fact]
+        public void TestInstantiateDictV2()
+        {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation> 
+            {
+                {cityManager.Location[0].Name.Substring(0, 3).ToUpper(), cityManager.Location[0]},
+                {cityManager.Location[1].Name.Substring(0, 3).ToUpper(), cityManager.Location[1]}    
+            };
+            
+
+            Assert.Equal("lille", cities["LIL"].Name);
+            Assert.Equal("paris", cities["PAR"].Name);
+        }
+
+        [Fact]
+        public void TestEnumDict()
+        {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(2);
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>();
+
+            foreach (var city in cityManager.Location)
+            {
+                cities.Add(city.Name.Substring(0, 3).ToUpper(), city);
+            }
+
+            foreach (var item in cities)
+            {
+                Console.WriteLine(item.Key, item.Value);
+            }
+            foreach (var item in cities.Values)
+            {
+                Console.WriteLine(item.Name);
+            }
+        }
     }
 }
