@@ -289,5 +289,31 @@ namespace Collection.Test
             //Then
             Assert.False(exists);
         }
+
+        [Fact]
+        public void TestRegionManagerGetNFirstRegion()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            RegionManager regionManager = new RegionManager(new CsvReader(filePath, true, ','));
+            //When
+            regionManager.GetNFirstRegion(2);
+        //Then
+            Assert.Equal("nord", regionManager.Region[59]);
+        }
+
+        [Fact]
+        public void TestRegionManagerGetAllRegion()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            RegionManager regionManager = new RegionManager(new CsvReader(filePath, true, ','));
+            //When
+            regionManager.GetAllRegion();
+            //Then
+            Assert.Equal("puy de dome", regionManager.Region[63]);
+            Assert.Equal(11, regionManager.Region.Count);
+        }
+
     }
 }
