@@ -234,5 +234,22 @@ namespace Collection.Test
                 i++;
             }
         }
+
+        [Fact]
+        public void TestDictAddSameKeyRaiseError()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(1);
+            string key = cityManager.Location[0].Name.Substring(0, 3).ToUpper();
+            ILocation city = cityManager.Location[0];
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>
+            {
+                {key, city}
+            };
+            //Then
+            Assert.Throws<System.ArgumentException>(delegate {cities.Add(key, city);});
+        }
     }
 }
