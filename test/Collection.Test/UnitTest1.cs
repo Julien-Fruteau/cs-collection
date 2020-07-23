@@ -236,7 +236,7 @@ namespace Collection.Test
         }
 
         [Fact]
-        public void TestDictAddSameKeyRaiseError()
+        public void TestDictAddSameKeyThrowsError()
         {
             //Given
             string filePath = TestFile.GetTestFilePath();
@@ -244,6 +244,7 @@ namespace Collection.Test
             cityManager.GetNFirstLocation(1);
             string key = cityManager.Location[0].Name.Substring(0, 3).ToUpper();
             ILocation city = cityManager.Location[0];
+            // When
             Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>
             {
                 {key, city}
