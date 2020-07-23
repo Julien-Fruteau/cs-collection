@@ -154,5 +154,166 @@ namespace Collection.Test
             Assert.Equal(-1, resA);
             Assert.Equal(1, resB);
         }
+
+        [Fact]
+        public void TestInstantiateDict()
+        {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>();
+
+            foreach (var city in cityManager.Location)
+            {
+                cities.Add(city.Name.Substring(0, 3).ToUpper(), city);
+            }
+
+            Assert.Equal("lille", cities["LIL"].Name);
+            Assert.Equal("toulouse", cities["TOU"].Name);
+        }
+
+        [Fact]
+        public void TestInstantiateDictV2()
+        {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation> 
+            {
+                {cityManager.Location[0].Name.Substring(0, 3).ToUpper(), cityManager.Location[0]},
+                {cityManager.Location[1].Name.Substring(0, 3).ToUpper(), cityManager.Location[1]}    
+            };
+            
+
+            Assert.Equal("lille", cities["LIL"].Name);
+            Assert.Equal("paris", cities["PAR"].Name);
+        }
+
+        [Fact]
+        public void TestEnumDict()
+        {
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(2);
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>();
+
+            foreach (var city in cityManager.Location)
+            {
+                cities.Add(city.Name.Substring(0, 3).ToUpper(), city);
+            }
+
+            int i = 0;
+            foreach (var item in cities)
+            {
+                switch (i)
+                {
+                    case 0:
+                        Assert.Equal("LIL", item.Key);
+                        Assert.Equal("lille", item.Value.Name);
+                        break;
+                    case 1:
+                        Assert.Equal("PAR", item.Key);
+                        Assert.Equal("paris", item.Value.Name);
+                        break;
+                }
+                i++;
+            }
+            
+            i = 0;
+            foreach (var item in cities.Values)
+            {
+                switch (i)
+                {
+                    case 0:
+                        Assert.Equal("lille", item.Name);
+                        break;
+                    case 1:
+                        Assert.Equal("paris", item.Name);
+                        break;
+                }
+                i++;
+            }
+        }
+
+        [Fact]
+        public void TestDictAddSameKeyThrowsError()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(1);
+            string key = cityManager.Location[0].Name.Substring(0, 3).ToUpper();
+            ILocation city = cityManager.Location[0];
+            // When
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>
+            {
+                {key, city}
+            };
+            //Then
+            Assert.Throws<System.ArgumentException>(delegate {cities.Add(key, city);});
+        }
+
+        [Fact]
+        public void TestDictLookUpMissingKeyThrowsError()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(1);
+            string key = cityManager.Location[0].Name.Substring(0, 3).ToUpper();
+            ILocation city = cityManager.Location[0];
+            // When
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>
+            {
+                {key, city}
+            };
+            //Then
+            Assert.Throws<System.Collections.Generic.KeyNotFoundException>(delegate {Console.WriteLine(cities["TOT"]);});
+        }
+
+        [Fact]
+        public void TestDictTryGetValue()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetNFirstLocation(1);
+            string key = cityManager.Location[0].Name.Substring(0, 3).ToUpper();
+            ILocation city = cityManager.Location[0];
+            // When
+            Dictionary<string, ILocation> cities = new Dictionary<string, ILocation>
+            {
+                {key, city}
+            };
+            bool exists = cities.TryGetValue("TOT", out ILocation aCity);
+            //Then
+            Assert.False(exists);
+        }
+
+        [Fact]
+        public void TestRegionManagerGetNFirstRegion()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            RegionManager regionManager = new RegionManager(new CsvReader(filePath, true, ','));
+            //When
+            regionManager.GetNFirstRegion(2);
+        //Then
+            Assert.Equal("nord", regionManager.Region[59]);
+        }
+
+        [Fact]
+        public void TestRegionManagerGetAllRegion()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            RegionManager regionManager = new RegionManager(new CsvReader(filePath, true, ','));
+            //When
+            regionManager.GetAllRegion();
+            //Then
+            Assert.Equal("puy de dome", regionManager.Region[63]);
+            Assert.Equal(11, regionManager.Region.Count);
+        }
+
     }
 }
