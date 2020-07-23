@@ -202,13 +202,36 @@ namespace Collection.Test
                 cities.Add(city.Name.Substring(0, 3).ToUpper(), city);
             }
 
+            int i = 0;
             foreach (var item in cities)
             {
-                Console.WriteLine(item.Key, item.Value);
+                switch (i)
+                {
+                    case 0:
+                        Assert.Equal("LIL", item.Key);
+                        Assert.Equal("lille", item.Value.Name);
+                        break;
+                    case 1:
+                        Assert.Equal("PAR", item.Key);
+                        Assert.Equal("paris", item.Value.Name);
+                        break;
+                }
+                i++;
             }
+            
+            i = 0;
             foreach (var item in cities.Values)
             {
-                Console.WriteLine(item.Name);
+                switch (i)
+                {
+                    case 0:
+                        Assert.Equal("lille", item.Name);
+                        break;
+                    case 1:
+                        Assert.Equal("paris", item.Name);
+                        break;
+                }
+                i++;
             }
         }
     }
