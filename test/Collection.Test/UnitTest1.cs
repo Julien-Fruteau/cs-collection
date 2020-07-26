@@ -315,5 +315,40 @@ namespace Collection.Test
             Assert.Equal(11, regionManager.Region.Count);
         }
 
+        [Fact]
+        public void InheritanceAndChildInstantiation()
+        {
+        //Given
+            Inheritance inheritance = new Inheritance();
+            Child child = new Child();
+        //When
+        //Then
+            Assert.Equal("Inheritance : called from Inheritance", inheritance.GetClassName());
+            Assert.Equal("Child : called from Child", child.GetClassName());
+        }
+
+        [Fact]
+        public void InheritanceAndChildInstantiationFromInheritance()
+        {
+            //Given
+            Inheritance inheritance = new Inheritance();
+            Inheritance child = new Child();
+            //When
+            //Then
+            Assert.Equal("Inheritance : called from Inheritance", inheritance.GetClassName());
+            Assert.Equal("Child : called from Child", child.GetClassName());
+        }
+
+        [Fact]
+        public void InheritanceAndChildInstantiationFromIBase()
+        {
+            //Given
+            IBase inheritance = new Inheritance();
+            IBase child = new Child();
+            //When
+            //Then
+            Assert.Equal("Inheritance : called from Inheritance", inheritance.GetClassName());
+            Assert.Equal("Child : called from Child", child.GetClassName());
+        }
     }
 }
