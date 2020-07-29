@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Collection.Test
@@ -349,6 +350,69 @@ namespace Collection.Test
             //Then
             Assert.Equal("Inheritance : called from Inheritance", inheritance.GetClassName());
             Assert.Equal("Child : called from Child", child.GetClassName());
+        }
+
+        [Fact]
+        public void TestLINQ_Take_Demo()
+        {
+            //Given
+            int testLen = 0;
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //When
+            foreach (var item in cityManager.Location.Take(5))
+                testLen++;
+            //Then
+            Assert.Equal(5, testLen);
+        }
+
+        [Fact]
+        public void TestLINQ_OrderBy_Demo()
+        {
+            //Given
+            List<ILocation> expected = new List<ILocation>() {
+                new City("bordeaux",33,"gironde",249000),
+                new City("clermont ferrand",63,"puy de dome",169000),
+                new City("lille",59,"nord",1000000)
+            };
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //Then
+            int i = 0;
+            foreach (var item in cityManager.Location.OrderBy(x => x.Name).Take(3))
+            {
+                Assert.Equal(expected[i].Name, item.Name);
+                i++;
+            }
+        }
+
+        [Fact]
+        public void TestLINQ_Where_Demo()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //When
+            IEnumerable<ILocation> getItems = cityManager.Location.Where(x => x.Name.Contains(' '));
+            //Then
+            Assert.Equal(1, getItems.Count());
+            Assert.Equal("clermont ferrand", getItems.First().Name);
+        }
+
+        [Fact]
+        public void TestLINQ_Where_Demo2()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //When
+            var getItems = cityManager.Location.Where(x => !x.Name.Contains(' '));
+            //Then
+            Assert.Equal(10, getItems.Count());
         }
     }
 }
