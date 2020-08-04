@@ -414,5 +414,20 @@ namespace Collection.Test
             //Then
             Assert.Equal(10, getItems.Count());
         }
+
+        [Fact]
+        public void TestLINQ_Query_Syntax_Demo()
+        {
+            //Given
+            string filePath = TestFile.GetTestFilePath();
+            ILocationManager cityManager = new CityManager(new CsvReader(filePath, true, ','));
+            cityManager.GetAllLocation();
+            //When
+            var getItems = from city in cityManager.Location
+                           where !city.Name.Contains(' ')
+                           select city;
+            //Then
+            Assert.Equal(10, getItems.Count());
+        }
     }
 }
